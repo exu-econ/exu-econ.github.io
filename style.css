@@ -40,7 +40,7 @@
   --text: #1d1d1b;
   --muted: #6f6d68;
   --rule: #e4e1da;
-  --max-width: 1100px;
+  --max-width: 1200px;
   --home-width: 780px;
 }
 
@@ -356,3 +356,39 @@ a {
     font-size: 0.92rem;
   }
 }
+
+/* US Political Tracker nav item: keep three header links on one line on very narrow phones */
+@media (max-width: 400px) {
+  .site-nav {
+    gap: 18px;
+  }
+
+  .site-nav a {
+    font-size: 0.8rem;
+  }
+}
+
+/* ---------------- Work in Progress ---------------- */
+
+.wip-section {
+  margin-top: 64px;
+}
+
+.inline-link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.inline-link:hover {
+  opacity: 0.65;
+}
+
+@media (max-width: 700px) {
+  .wip-section {
+    margin-top: 48px;
+  }
+}
+
+/* keep nav position stable across short/tall pages */
+html { scrollbar-gutter: stable; }
