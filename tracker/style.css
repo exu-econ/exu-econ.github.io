@@ -1,0 +1,412 @@
+/* US Political Tracker — intro + large map single page */
+
+:root {
+  --bg: #fcfbf8;
+  --text: #1d1d1b;
+  --muted: #6f6d68;
+  --rule: #e4e1da;
+  --none: #eceae4;
+  --active: #3a3936;
+  --active-hover: #2a2926;
+  --control-hover: #f3f0e9;
+  --max-width: 1264px; /* 1200px content + 2×32px, matches homepage */
+  --page-pad-x: 32px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover { opacity: 0.65; }
+
+/* ---------------- Site header (aligned with page content) ---------------- */
+
+.site-header {
+  border-bottom: 1px solid var(--rule);
+  background: rgba(251, 250, 247, 0.96);
+  flex: 0 0 auto;
+}
+
+.nav-wrap {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--page-pad-x);
+}
+
+.site-nav {
+  display: flex;
+  gap: 42px;
+  align-items: center;
+  height: 72px;
+}
+
+.site-nav a {
+  position: relative;
+  padding: 25px 0 23px;
+  color: #2e2e2e;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  color: #000;
+  opacity: 1;
+}
+
+.site-nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: #222;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 14px var(--page-pad-x) 8px;
+}
+
+/* Intro — layer links switch the map */
+.intro {
+  flex: 0 0 auto;
+  margin: 0 0 10px;
+  max-width: 52rem;
+}
+
+.lede {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.layer-list {
+  margin: 0;
+  padding: 0 0 0 1.15rem;
+  list-style: disc;
+}
+
+.layer-list li {
+  margin: 0 0 4px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.layer-link {
+  font-weight: 400;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.layer-link.current {
+  font-weight: 700;
+  text-decoration-thickness: 1.5px;
+}
+
+.layer-note {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* Map panel fills remaining viewport */
+.map-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-bottom: 6px;
+  padding: 2px 0 6px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule);
+  flex: 0 0 auto;
+}
+
+.layer-title {
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+  margin-right: 4px;
+}
+
+.toggle {
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.toggle button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  padding: 4px 10px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+}
+
+.toggle button.active {
+  background: var(--active);
+  color: #faf9f6;
+}
+
+.toggle button:not(.active):hover {
+  background: var(--control-hover);
+}
+
+.slider-wrap {
+  flex: 1 1 260px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 200px;
+}
+
+.frame-label {
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  min-width: 64px;
+  white-space: nowrap;
+}
+
+.slider-wrap input[type=range] {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--active);
+  cursor: pointer;
+}
+
+.slider-wrap input[type=range]:disabled { opacity: 0.4; cursor: default; }
+
+.play {
+  appearance: none;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--text);
+  border-radius: 3px;
+  padding: 4px 10px;
+  min-width: 58px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.play:hover:not(:disabled) { background: var(--control-hover); }
+.play[aria-pressed="true"] { background: var(--active); color: #faf9f6; border-color: var(--active); }
+.play:disabled { opacity: 0.4; cursor: default; }
+
+/* Keyboard focus */
+.toggle button:focus-visible,
+.play:focus-visible,
+.layer-link:focus-visible,
+.site-nav a:focus-visible,
+.source a:focus-visible {
+  outline: 2px solid var(--active);
+  outline-offset: 2px;
+}
+.slider-wrap input[type=range]:focus-visible { outline: 2px solid var(--active); outline-offset: 4px; }
+#map:focus-visible { outline: 1px solid var(--rule); }
+
+/* Map */
+.map-wrap {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-height: min(72vh, 820px);
+}
+
+#map {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  outline: none;
+}
+
+.map-status {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  max-width: min(90%, 30rem);
+  padding: 10px 16px;
+  background: rgba(252, 251, 248, 0.94);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+  text-align: center;
+  pointer-events: none;
+}
+.map-status[hidden] { display: none; }
+.map-status.error { color: #7a2e22; pointer-events: auto; }
+.map-status code { font-size: 0.8rem; background: #f1eee7; padding: 0 3px; border-radius: 2px; }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+  flex: 0 0 auto;
+}
+
+.legend .legend-title { color: var(--text); margin-right: 2px; }
+.legend .item { display: inline-flex; align-items: center; white-space: nowrap; }
+
+.legend .swatch {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  border: 1px solid #d4d0c7;
+  margin-right: 5px;
+  flex: 0 0 auto;
+}
+
+.source {
+  margin: 6px 0 0;
+  padding-top: 5px;
+  border-top: 1px solid var(--rule);
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--muted);
+  flex: 0 0 auto;
+}
+.source a { color: inherit; }
+
+/* Leaflet: kill gray tile/canvas chrome */
+.leaflet-container {
+  background: transparent !important;
+  font: inherit;
+}
+
+.leaflet-pane,
+.leaflet-map-pane,
+.leaflet-overlay-pane,
+.leaflet-tile-pane {
+  background: transparent;
+}
+
+.leaflet-control-zoom a {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  border-color: var(--rule) !important;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  font-size: 13px;
+}
+
+.leaflet-bar {
+  border: 1px solid var(--rule) !important;
+  box-shadow: none !important;
+  border-radius: 3px !important;
+}
+
+.leaflet-tooltip {
+  font-family: "Lato", "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  background: #fffcf7;
+  color: var(--text);
+}
+.leaflet-tooltip .tt-note { color: var(--muted); font-size: 0.72rem; }
+
+@media (max-width: 700px) {
+  :root { --page-pad-x: 17px; }
+  .site-nav {
+    height: 64px;
+    gap: 28px;
+  }
+
+  .site-nav a {
+    padding: 22px 0 18px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 640px) {
+  :root { --page-pad-x: 17px; }
+  .page { padding: 10px var(--page-pad-x) 10px; }
+  .lede { font-size: 0.88rem; }
+  .layer-list li { font-size: 0.88rem; }
+  .layer-note { display: block; font-size: 0.8rem; }
+  .controls { gap: 8px 10px; }
+  .toggle { order: 1; }
+  .play { order: 2; margin-left: auto; }
+  .slider-wrap { order: 3; flex: 1 1 100%; min-width: 0; }
+  .toggle button, .play { padding: 7px 12px; font-size: 0.85rem; }
+  .slider-wrap input[type=range] { height: 28px; } /* larger touch target */
+  .map-wrap { flex: 0 0 auto; min-height: 0; height: auto; aspect-ratio: 3 / 2; } /* lower-48 is ~1.6:1 */
+  .leaflet-control-zoom { display: none; } /* pinch to zoom on touch */
+  .legend { gap: 4px 10px; }
+}
+
+@media (max-width: 400px) {
+  .site-nav { gap: 18px; }
+  .site-nav a { font-size: 0.8rem; }
+}
+
+/* keep nav position stable across short/tall pages */
+html { scrollbar-gutter: stable; }

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="US Political Tracker — interactive county maps (Erdong Xu)" />
+  <link rel="icon" href="data:," />
+  <title>US Political Tracker | Erdong Xu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-wrap">
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="../index.html">Erdong Xu</a>
+        <a href="../research.html">Research</a>
+        <a class="active" href="index.html" aria-current="page">US Political Tracker</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="intro" aria-label="About">
+      <p class="lede">
+        Interactive county maps for selected U.S. political indicators.
+        Choose a map below, drag the time slider, and switch the color mode above the map.
+      </p>
+      <ul class="layer-list">
+        <li>
+          <a href="?layer=287g" class="layer-link" data-layer="287g">ICE 287(g) Agreements</a>
+          <span class="layer-note">— cumulative by signed date (2025-Q1 → 2026-Q4)</span>
+        </li>
+        <li>
+          <a href="?layer=ccc" class="layer-link" data-layer="ccc">CCC Protest Events</a>
+          <span class="layer-note">— events in quarter only (2025-Q1 → 2026-Q2)</span>
+        </li>
+        <li>
+          <a href="?layer=president" class="layer-link" data-layer="president">Presidential Elections</a>
+          <span class="layer-note" data-note="president">— county two-party margin by election year (2012–2024)</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="map-panel" aria-label="Map">
+      <div class="controls">
+        <div class="toggle" role="group" aria-label="Color mode">
+          <button type="button" data-mode="continuous" class="active" aria-pressed="true">Intensity</button>
+          <button type="button" data-mode="binary" aria-pressed="false">Any / none</button>
+        </div>
+        <div class="slider-wrap">
+          <span class="frame-label" id="frameLabel">—</span>
+          <input id="frameSlider" type="range" min="0" max="0" step="1" value="0" aria-label="Quarter" />
+        </div>
+        <button type="button" class="play" id="playBtn" aria-pressed="false">Play</button>
+      </div>
+
+      <div class="map-wrap">
+        <div id="map" role="region" aria-label="County map"></div>
+        <div class="map-status" id="mapStatus" role="status" aria-live="polite">Loading map…</div>
+      </div>
+      <div class="legend" id="legend" aria-label="Legend"></div>
+      <p class="source" id="source"></p>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    window.MAP_CONFIG = {
+      defaultLayer: "287g",
+      geojson: "counties.geojson",
+      layers: {
+        "287g":      { data: "data_287g.json",      title: "ICE 287(g) Agreements" },
+        "ccc":       { data: "data_ccc.json",       title: "CCC Protest Events" },
+        "president": { data: "data_president.json", title: "Presidential Elections" }
+      }
+    };
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
