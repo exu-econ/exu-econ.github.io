@@ -218,6 +218,10 @@ a {
   width: 100%;
 }
 
+.paper-card--center-image .paper-image {
+  align-self: center;
+}
+
 .paper-image img {
   display: block;
   width: 100%;
