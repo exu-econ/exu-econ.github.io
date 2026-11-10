@@ -378,6 +378,18 @@ a {
   margin-top: 64px;
 }
 
+.title-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(58, 57, 54, 0.45);
+}
+
+.title-link:hover {
+  opacity: 0.65;
+}
+
 .inline-link {
   text-decoration: underline;
   text-decoration-thickness: 1px;
